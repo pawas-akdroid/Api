@@ -3,7 +3,9 @@ const app = express()
 const axios = require("axios")
 require('dotenv').config({ encoding: 'latin1' })
 const port = process.env.APP_PORT
-const PointDomain = process.env.PointDomain
+// const PointDomain = process.env.PointDomain
+const PointDomain = `http://localhost:6001/api/v1/merchant/`
+
 
 const cors = require('cors');
 const helmet = require('helmet');
@@ -20,7 +22,6 @@ app.use(express.urlencoded({ limit: '2mb', extended: true }));
 app.use(express.json({ limit: '2mb' }))
 app.post("/merchant-api",ApiValidators, (req, res)=>{
     axios.post(`${PointDomain}/main-api-controller`, req.body).then((data)=>{
-        console.log(data)
         errorHandler(res, data)
     }).catch((err)=>{
         errorHandler(res, err)

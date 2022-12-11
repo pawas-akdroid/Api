@@ -1,9 +1,11 @@
 exports.errorHandler = (res, err) => {
     if (err?.response?.status === 404) {
-        return notFoundError(res, err)
+        res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' })
+        return res.end(JSON.stringify({ error: err?.response?.data?.error }))
     }
     else if (err?.response?.status === 400) {
-        return serverError(res, err)
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' })
+        return res.end(JSON.stringify({ error: err?.response?.data?.error }))
     }
     else if (err?.response?.status === 406) {
         res.writeHead(406, { 'Content-Type': 'application/json; charset=utf-8' })
